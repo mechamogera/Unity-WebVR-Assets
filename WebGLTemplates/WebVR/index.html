@@ -1,31 +1,34 @@
-﻿<!doctype html>
+<!DOCTYPE html>
 <html lang="en-us">
   <head>
     <meta charset="utf-8">
-    <title>%UNITY_WEB_NAME%</title>
-    <link rel="stylesheet" href="TemplateData/style.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | %UNITY_WEB_NAME%</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <script src="TemplateData/UnityProgress.js"></script>
+    <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="stylesheet" href="css/webvr.css">
+    <script src="TemplateData/UnityProgress.js"></script>  
+    <script src="%UNITY_WEBGL_LOADER_URL%"></script>
   </head>
-  <body class="template" data-unity-width="960" data-unity-height="600" data-unity-loaded="false" data-vr-loaded="false" data-supports-vr="false">
-    <p class="header"><span>Unity WebGL Player | </span>%UNITY_WEB_NAME%</p>
-    <div class="template-wrap clear">
-      <div class="canvas-wrapper" style="width: %UNITY_WIDTH%px; height: %UNITY_HEIGHT%px" data-vr-presentation-text="Put on your VR headset now">
-        <canvas class="emscripten" id="canvas" height="%UNITY_HEIGHT%" width="%UNITY_WIDTH%"></canvas>
+  <body>
+    <div class="webgl-content">
+      <div id="gameContainer" style="width: %UNITY_WIDTH%px; height: %UNITY_HEIGHT%px"></div>
+      <div class="footer">
+        <div class="webgl-logo"></div>
+        <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)">
+          <button id="btnVrToggle" class="btn btnVr btnVrToggle waiting" data-enter-vr-title="Enter VR" data-exit-vr-title="Exit VR" title="Enter VR">Enter VR</button>
+          <div class="vr">
+            <button id="btnVrReset" class="btn btnVr btnVrReset waiting" title="Reset View">Reset View</button>
+            <button id="btnFsEnter" class="btn btnFsEnter waiting" title="Fullscreen">Fullscreen</button>
+	  </div>
+	</div>
+        <div class="title">%UNITY_WEB_NAME%</div>
       </div>
-      <div class="logo"></div>
-      <div class="fullscreen">
-        <button id="btnVrToggle" class="btn btnVr btnVrToggle waiting" data-enter-vr-title="Enter VR" data-exit-vr-title="Exit VR" title="Enter VR">Enter VR</button>
-        <div class="vr">
-          <button id="btnVrReset" class="btn btnVr btnVrReset waiting" title="Reset View">Reset View</button>
-          <button id="btnFsEnter" class="btn btnFsEnter waiting" title="Fullscreen">Fullscreen</button>
-        </div>
-      </div>
-      <div class="title">%UNITY_WEB_NAME%</div>
     </div>
-    <p class="footer">&laquo; created with <a href="http://unity3d.com/" title="Go to unity3d.com">Unity</a> &raquo;</p>
-    %UNITY_WEBGL_LOADER_GLUE%
+    <script>
+      var elem = document.getElementById('gameContainer');
+      var gameInstance = UnityLoader.instantiate(elem, "%UNITY_WEBGL_BUILD_URL%", {onProgress: UnityProgress});
+    </script>
     <script src="js/three.min.js"></script>
     <script src="js/UnityWebVRManager.js"></script>
   </body>

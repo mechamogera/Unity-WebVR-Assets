@@ -3,7 +3,7 @@
   var btnFsEnter = document.querySelector('#btnFsEnter');
   var btnVrToggle = document.querySelector('#btnVrToggle');
   var btnVrReset = document.querySelector('#btnVrReset');
-  var canvas = document.querySelector('#canvas');
+  var canvas = document.getElementById('#canvas');
   var eyeParamsL;
   var eyeParamsR;
   var fullscreen = new Fullscreen();
@@ -203,16 +203,16 @@
     var eyeFOVL = isDeprecatedAPI ? eyeParamsL.recommendedFieldOfView : eyeParamsL.fieldOfView;
     var eyeFOVR = isDeprecatedAPI ? eyeParamsR.recommendedFieldOfView : eyeParamsR.fieldOfView;
 
-    SendMessage('WebVRCameraSet', 'eyeL_translation_x', eyeTranslationL);
-    SendMessage('WebVRCameraSet', 'eyeR_translation_x', eyeTranslationR);
-    SendMessage('WebVRCameraSet', 'eyeL_fovUpDegrees', eyeFOVL.upDegrees);
-    SendMessage('WebVRCameraSet', 'eyeL_fovDownDegrees', eyeFOVL.downDegrees);
-    SendMessage('WebVRCameraSet', 'eyeL_fovLeftDegrees', eyeFOVL.leftDegrees);
-    SendMessage('WebVRCameraSet', 'eyeL_fovRightDegrees', eyeFOVL.rightDegrees);
-    SendMessage('WebVRCameraSet', 'eyeR_fovUpDegrees', eyeFOVR.upDegrees);
-    SendMessage('WebVRCameraSet', 'eyeR_fovDownDegrees', eyeFOVR.downDegrees);
-    SendMessage('WebVRCameraSet', 'eyeR_fovLeftDegrees', eyeFOVR.leftDegrees);
-    SendMessage('WebVRCameraSet', 'eyeR_fovRightDegrees', eyeFOVR.rightDegrees);
+    gameInstance.SendMessage('WebVRCameraSet', 'eyeL_translation_x', eyeTranslationL);
+    gameInstance.SendMessage('WebVRCameraSet', 'eyeR_translation_x', eyeTranslationR);
+    gameInstance.SendMessage('WebVRCameraSet', 'eyeL_fovUpDegrees', eyeFOVL.upDegrees);
+    gameInstance.SendMessage('WebVRCameraSet', 'eyeL_fovDownDegrees', eyeFOVL.downDegrees);
+    gameInstance.SendMessage('WebVRCameraSet', 'eyeL_fovLeftDegrees', eyeFOVL.leftDegrees);
+    gameInstance.SendMessage('WebVRCameraSet', 'eyeL_fovRightDegrees', eyeFOVL.rightDegrees);
+    gameInstance.SendMessage('WebVRCameraSet', 'eyeR_fovUpDegrees', eyeFOVR.upDegrees);
+    gameInstance.SendMessage('WebVRCameraSet', 'eyeR_fovDownDegrees', eyeFOVR.downDegrees);
+    gameInstance.SendMessage('WebVRCameraSet', 'eyeR_fovLeftDegrees', eyeFOVR.leftDegrees);
+    gameInstance.SendMessage('WebVRCameraSet', 'eyeR_fovRightDegrees', eyeFOVR.rightDegrees);
   }
 
   function togglePresent () {
@@ -285,16 +285,16 @@
     }
     var quaternion = isDeprecatedAPI ? vrPose.orientation : new THREE.Quaternion().fromArray(vrPose.orientation);
     var euler = new THREE.Euler().setFromQuaternion(quaternion);
-    SendMessage('WebVRCameraSet', 'euler_x', euler.x);
-    SendMessage('WebVRCameraSet', 'euler_y', euler.y);
-    SendMessage('WebVRCameraSet', 'euler_z', euler.z);
+    gameInstance.SendMessage('WebVRCameraSet', 'euler_x', euler.x);
+    gameInstance.SendMessage('WebVRCameraSet', 'euler_y', euler.y);
+    gameInstance.SendMessage('WebVRCameraSet', 'euler_z', euler.z);
     if (vrPose.position !== null) {
       var positionX = isDeprecatedAPI ? vrPose.position.x : vrPose.position[0];
       var positionY = isDeprecatedAPI ? vrPose.position.y : vrPose.position[1];
       var positionZ = isDeprecatedAPI ? vrPose.position.z : vrPose.position[2];
-      SendMessage('WebVRCameraSet', 'position_x', positionX);
-      SendMessage('WebVRCameraSet', 'position_y', positionY);
-      SendMessage('WebVRCameraSet', 'position_z', positionZ);
+      gameInstance.SendMessage('WebVRCameraSet', 'position_x', positionX);
+      gameInstance.SendMessage('WebVRCameraSet', 'position_y', positionY);
+      gameInstance.SendMessage('WebVRCameraSet', 'position_z', positionZ);
     }
   }
 
@@ -317,11 +317,11 @@
 
   function modeChange (e) {
     if (isPresenting()) {
-      SendMessage('WebVRCameraSet', 'changeMode', 'vr');
+      gameInstance.SendMessage('WebVRCameraSet', 'changeMode', 'vr');
       document.body.dataset.vrPresenting = 'true';
       btnVrToggle.textContent = btnVrToggle.title = btnVrToggle.dataset.exitVrTitle;
     } else {
-      SendMessage('WebVRCameraSet', 'changeMode', 'normal');
+      gameInstance.SendMessage('WebVRCameraSet', 'changeMode', 'normal');
       document.body.dataset.vrPresenting = 'false';
       btnVrToggle.textContent = btnVrToggle.title = btnVrToggle.dataset.enterVrTitle;
     }
